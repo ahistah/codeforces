@@ -1,29 +1,52 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+void solve() {
+    int n;
+    cin >> n;
+    int size = 2 * n;
+    vector<int> counts(size + 1, 0);
+    
+    for (int i = 0; i < size; ++i) {
+        int x;
+        cin >> x;
+        counts[x]++;
+    }
+    
+    int c_odd = 0;
+    int c_even = 0;
+    
+    for (int i = 1; i <= size; ++i) {
+        if (counts[i] > 0) {
+            if (counts[i] % 2 != 0) {
+                c_odd++;
+            } else {
+                c_even++;
+            }
+        }
+    }
+    int ans = c_odd + 2 * c_even;
+    if (c_odd == 0) {
+        if (c_even % 2 != n % 2) {
+            ans -= 2;
+        }
+    }
+    
+    cout << ans << endl;
+}
 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
     int t;
     cin >> t;
     while (t--) {
-        int n;
-        cin >> n;
-        vector<int> a(2*n);
-        for (int &x : a) cin >> x;
-
-        unordered_map<int,int> freq;
-        for (int x : a) freq[x]++;
-
-        int E = 0, O = 0;
-        for (auto &p : freq) {
-            if (p.second % 2 == 0) E++;
-            else O++;
-        }
-
-        int k = min(E, n);
-        cout << (2 * k + O) << "\n";
+        solve();
     }
+    
     return 0;
 }
